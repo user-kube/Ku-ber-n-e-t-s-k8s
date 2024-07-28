@@ -26,6 +26,9 @@ Allow custom TCP (port 8080) for Argo CD access.
 Install Kubernetes CLI (kubectl):
 
 ///cmd///
+
+
+
 curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
@@ -33,6 +36,9 @@ sudo mv ./kubectl /usr/local/bin/kubectl
 
 Install kops:
 ///cmd///
+
+
+
 curl -Lo kops https://github.com/kubernetes/kops/releases/download/v1.22.0/kops-linux-amd64
 chmod +x ./kops
 sudo mv ./kops /usr/local/bin/
@@ -44,18 +50,26 @@ and map ur credentials access key and secret key. also attach the required roles
 Create an S3 bucket for kops state:
 
 ////cmd///
+
+
 aws s3api create-bucket --bucket <your-kops-state-store> --region <your-region> --create-bucket-configuration LocationConstraint=<your-region>
 
 Export environment variables:
 ////cmd///
+
+
 export KOPS_STATE_STORE=s3://<your-kops-state-store>
 export NAME=<your-cluster-name>.k8s.local
+
+
+
 Create a Kubernetes cluster:
-
-
 Create the cluster
 
 ////cmd///
+
+
+
 kops create cluster --zones=<your-aws-zone> --name=${NAME}
 kops update cluster ${NAME} --yes
 kops validate cluster --wait 10m
@@ -65,11 +79,13 @@ kops validate cluster --wait 10m
 Create Argo CD namespace:
 
 ////cmd///
+
 kubectl create namespace argocd
 
 Install Argo CD:
 
 ////cmd///
+
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 
