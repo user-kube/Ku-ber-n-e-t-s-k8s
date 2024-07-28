@@ -161,3 +161,19 @@ aws s3 rb s3://my-store-unique1234 --force
 
 export KOPS_STATE_STORE=s3://my-store-unique1234
 
+
+
+
+My Practice..///
+
+aws s3api create-bucket --bucket my-store-unique1234 --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1
+
+
+export KOPS_STATE_STORE=s3://my-store-unique1234
+export NAME=myfirstlocalcluster.k8s.local
+
+
+
+kops create cluster --zones=ap-south-1b --name=${NAME}
+kops update cluster ${NAME} --yes
+kops validate cluster --wait 10m
